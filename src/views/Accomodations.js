@@ -1,10 +1,10 @@
+import AddAccomodationModal from "components/Accomodation/AddAccomodationModal";
 import OnlyHeader from "components/Headers/OnlyHeader";
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Card,
   CardHeader,
-  Col,
   Container,
   Media,
   Row,
@@ -12,6 +12,8 @@ import {
 } from "reactstrap";
 
 const Accomodations = () => {
+  const [accomodationModal, setAccomodationModal] = useState(false);
+  const toggleModal = () => setAccomodationModal(!accomodationModal);
   const allacommodations = [
     {
       id: "1",
@@ -33,7 +35,9 @@ const Accomodations = () => {
               <CardHeader className="border-0">
                 <Row className="d-flex flex-column justify-content-between align-items-center flex-xl-row mx-3">
                   <h3 className="text-center text-xl-left">Accomodations</h3>
-                  <Button color="primary">Add Accomodation</Button>
+                  <Button color="primary" onClick={toggleModal}>
+                    Add Accomodation
+                  </Button>
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
@@ -128,6 +132,10 @@ const Accomodations = () => {
           </div>
         </Row>
       </Container>
+      <AddAccomodationModal
+        accomodationModal={accomodationModal}
+        toggle={toggleModal}
+      />
     </div>
   );
 };
