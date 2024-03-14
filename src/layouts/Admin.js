@@ -1,14 +1,22 @@
-
-import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  useLocation,
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
 // reactstrap components
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 
 import routes from "routes.js";
+import { useSelector } from "react-redux";
 
 const Admin = (props) => {
+  const history = useHistory();
+  const { uid } = useSelector((state) => state.authUser);
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -46,16 +54,22 @@ const Admin = (props) => {
     return "Brand";
   };
 
+  useEffect(() => {
+    if (!uid) {
+      history.push("/auth/login");
+    }
+  }, [uid]);
+
   return (
     <>
       <Sidebar
         {...props}
         routes={routes}
-        logo={{
-          innerLink: "/admin/index",
-          imgSrc: require("../assets/img/brand/argon-react.png").default,
-          imgAlt: "...",
-        }}
+        // logo={{
+        //   innerLink: "/admin/index",
+        //   imgSrc: require("../assets/img/brand/argon-react.png").default,
+        //   imgAlt: "...",
+        // }}
       />
       <div className="main-content" ref={mainContent}>
         <AdminNavbar

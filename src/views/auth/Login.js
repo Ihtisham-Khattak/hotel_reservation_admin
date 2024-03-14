@@ -17,6 +17,9 @@
 */
 
 // reactstrap components
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Button,
   Card,
@@ -29,9 +32,23 @@ import {
   InputGroup,
   Row,
   Col,
+  Spinner,
 } from "reactstrap";
+import { loginAction } from "store/actions/authAction";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state) => state.authUser);
+  const [loginForm, setLoginForm] = useState({
+    email: "",
+    password: "",
+  });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <>
       <Col lg="5" md="7">
@@ -40,7 +57,13 @@ const Login = () => {
             <div className="text-center text-muted mb-4">
               <small>Sign in</small>
             </div>
-            <Form role="form">
+            <Form
+              role="form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                dispatch(loginAction(loginForm));
+              }}
+            >
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -51,11 +74,16 @@ const Login = () => {
                   <Input
                     placeholder="Email"
                     type="email"
+                    required
+                    value={loginForm.email}
+                    onChange={(e) =>
+                      setLoginForm({ ...loginForm, email: e.target.value })
+                    }
                     autoComplete="new-email"
                   />
                 </InputGroup>
               </FormGroup>
-              <FormGroup>
+              {/* <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -65,32 +93,61 @@ const Login = () => {
                   <Input
                     placeholder="Password"
                     type="password"
+                    required
                     autoComplete="new-password"
+                    value={loginForm.password}
+                    onChange={(e) =>
+                      setLoginForm({ ...loginForm, password: e.target.value })
+                    }
                   />
                 </InputGroup>
+              </FormGroup> */}
+              <FormGroup>
+                <InputGroup className="input-group-alternative">
+                  <InputGroupAddon addonType="prepend">
+                    <InputGroupText>
+                      <i className="ni ni-lock-circle-open" />
+                    </InputGroupText>
+                  </InputGroupAddon>
+                  <Input
+                    placeholder="Password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    value={loginForm?.password}
+                    required
+                    onChange={(e) =>
+                      setLoginForm({ ...loginForm, password: e.target.value })
+                    }
+                  />
+                  <InputGroupAddon addonType="append">
+                    <InputGroupText
+                      className="cursor-pointer"
+                      onClick={handlePasswordToggle}
+                    >
+                      {showPassword ? (
+                        <i className="fas fa-eye text-gray-500"></i>
+                      ) : (
+                        <i className="fas fa-eye-slash text-gray-500"></i>
+                      )}
+                    </InputGroupText>
+                  </InputGroupAddon>
+                </InputGroup>
               </FormGroup>
-              <div className="custom-control custom-control-alternative custom-checkbox">
-                <input
-                  className="custom-control-input"
-                  id=" customCheckLogin"
-                  type="checkbox"
-                />
-                <label
-                  className="custom-control-label"
-                  htmlFor=" customCheckLogin"
-                >
-                  <span className="text-muted">Remember me</span>
-                </label>
-              </div>
+
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
-                  Sign in
+                <Button
+                  className="my-4"
+                  color="primary"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? <Spinner size="sm" /> : "Sign in"}
                 </Button>
               </div>
             </Form>
           </CardBody>
         </Card>
-        <Row className="mt-3">
+        {/* <Row className="mt-3">
           <Col xs="6">
             <a
               className="text-light"
@@ -109,7 +166,7 @@ const Login = () => {
               <small>Create new account</small>
             </a>
           </Col>
-        </Row>
+        </Row> */}
       </Col>
     </>
   );

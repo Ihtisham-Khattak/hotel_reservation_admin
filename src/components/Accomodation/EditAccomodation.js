@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Button,
@@ -14,6 +14,7 @@ import {
   Row,
   Spinner,
 } from "reactstrap";
+import { updateAccomodationActions } from "store/actions/AccomodationsActions";
 import { addAccomodationActions } from "store/actions/AccomodationsActions";
 
 let initialFormData = {
@@ -28,11 +29,18 @@ let initialFormData = {
   address: "",
 };
 
-const AddAccomodationModal = ({ accomodationModal, toggle }) => {
+const EditAccomodation = ({ modal, toggle, singleAccomodation }) => {
   const dispatch = useDispatch();
   const { accomodationLoading } = useSelector((state) => state.accomodation);
   const [formData, setFormData] = useState(initialFormData);
   const [propertyImages, setpropertyImages] = useState([]);
+  useEffect(() => {
+    if (singleAccomodation) {
+      setFormData(singleAccomodation);
+      setpropertyImages(singleAccomodation?.images);
+    }
+  }, [singleAccomodation]);
+
   const currencyOptions = [
     {
       name: "EUR",
@@ -68,9 +76,10 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
       ...formData,
       images: propertyImages,
     };
+    console.log({ payload });
     dispatch(
-      addAccomodationActions(payload, () => {
-        alert("Accomodation Added");
+      updateAccomodationActions(payload, () => {
+        alert("Accomodation Updated");
         setFormData(initialFormData);
         toggle();
       })
@@ -78,7 +87,6 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
   };
 
   const handleImageChange = (e) => {
-    console.log(propertyImages.length, "legnh");
     if (propertyImages.length >= 5) {
       alert("max 5 images can be selected");
     } else {
@@ -99,8 +107,8 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
   };
 
   return (
-    <Modal isOpen={accomodationModal} toggle={toggle}>
-      <ModalHeader toggle={toggle}>Add Accomodation</ModalHeader>
+    <Modal isOpen={modal} toggle={toggle}>
+      <ModalHeader toggle={toggle}>Update Accomodation</ModalHeader>
       <ModalBody className="py-0">
         <Form onSubmit={addAccomodation}>
           <Row>
@@ -228,7 +236,11 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
                       x
                     </div>
                     <img
-                      src={URL.createObjectURL(preview)}
+                      src={
+                        preview instanceof File
+                          ? URL.createObjectURL(preview)
+                          : preview
+                      }
                       className="w-100 h-100"
                       alt={`Accommodation ${index + 1}`}
                     />
@@ -360,7 +372,11 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
               color="primary"
               type="submit"
             >
-              {accomodationLoading ? <Spinner size="sm" /> : "Add Accomodation"}
+              {accomodationLoading ? (
+                <Spinner size="sm" />
+              ) : (
+                "Update Accomodation"
+              )}
             </Button>{" "}
           </Row>
         </Form>
@@ -369,4 +385,4 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
   );
 };
 
-export default AddAccomodationModal;
+export default EditAccomodation;

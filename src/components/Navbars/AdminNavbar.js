@@ -1,3 +1,4 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -10,14 +11,16 @@ import {
   Container,
   Media,
 } from "reactstrap";
+import { logout } from "store/actions/authAction";
 
 const AdminNavbar = (props) => {
+  const dispatch = useDispatch();
   return (
     <>
-      <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
+      <Navbar className="navbar-top navbar-dark" expand="lg" id="navbar-main">
         <Container fluid>
           <Link
-            className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
+            className="h4 mb-0 text-white text-uppercase d-none d-md-inline-block"
             to="/"
           >
             {props.brandText}
@@ -26,7 +29,8 @@ const AdminNavbar = (props) => {
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
-                <Media className="align-items-center">
+                Admin
+                {/* <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
@@ -41,19 +45,25 @@ const AdminNavbar = (props) => {
                       Hotel Reservation
                     </span>
                   </Media>
-                </Media>
+                </Media> */}
               </DropdownToggle>
 
               <DropdownMenu className="dropdown-menu-arrow" right>
-                <DropdownItem className="noti-title" header tag="div">
+                {/* <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome!</h6>
-                </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
+                </DropdownItem> */}
+                {/* <DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
-                </DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                </DropdownItem> */}
+                {/* <DropdownItem divider /> */}
+                <DropdownItem
+                  href="#pablo"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    dispatch(logout());
+                  }}
+                >
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

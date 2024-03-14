@@ -12,25 +12,18 @@ import Messages from "views/Messages";
 var routes = [
   {
     path: "/index",
-    name: "Dashboard",
-    icon: "ni ni-tv-2 text-primary",
-    component: Index,
-    layout: "/admin",
-  },
-  {
-    path: "/user-profile",
-    name: "User Profile",
-    icon: "ni ni-single-02 text-yellow",
-    component: Profile,
-    layout: "/admin",
-  },
-  {
-    path: "/accomodations",
     name: "Accomodations",
-    icon: "ni ni-single-02 text-yellow",
+    icon: "ni ni-tv-2 text-primary",
     component: Accomodations,
     layout: "/admin",
   },
+  // {
+  //   path: "/user-profile",
+  //   name: "User Profile",
+  //   icon: "ni ni-single-02 text-yellow",
+  //   component: Profile,
+  //   layout: "/admin",
+  // },
   {
     path: "/Reservation",
     name: "Reservation",

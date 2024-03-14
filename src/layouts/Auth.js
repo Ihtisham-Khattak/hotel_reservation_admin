@@ -15,8 +15,15 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import { useLocation, Route, Switch, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import {
+  useLocation,
+  Route,
+  Switch,
+  Redirect,
+  useHistory,
+} from "react-router-dom";
 // reactstrap components
 import { Container, Row, Col } from "reactstrap";
 
@@ -25,6 +32,8 @@ import { Container, Row, Col } from "reactstrap";
 import routes from "routes.js";
 
 const Auth = (props) => {
+  const history = useHistory();
+  const { uid } = useSelector((state) => state.authUser);
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -55,11 +64,16 @@ const Auth = (props) => {
       }
     });
   };
+  useEffect(() => {
+    if (uid) {
+      history.push("/admin/index");
+    }
+  }, [uid]);
 
   return (
     <>
       <div className="main-content" ref={mainContent}>
-        <div className="header bg-gradient-info py-3 py-lg-5">
+        <div className="header bg-primary-update py-3 py-lg-5">
           <Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
@@ -69,7 +83,7 @@ const Auth = (props) => {
               </Row>
             </div>
           </Container>
-          <div className="separator separator-bottom separator-skew zindex-100">
+          {/* <div className="separator separator-bottom separator-skew zindex-100">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="none"
@@ -83,7 +97,7 @@ const Auth = (props) => {
                 points="2560 0 2560 100 0 100"
               />
             </svg>
-          </div>
+          </div> */}
         </div>
         {/* Page content */}
         <Container className="mt--8 pb-5">

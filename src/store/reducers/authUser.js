@@ -27,6 +27,12 @@ export default function authUserReducer(
         user: null,
         uid: null,
       };
+    case "AUTH_LOADER":
+      // For Example, any thing
+      return {
+        ...state,
+        loading: payload,
+      };
     case UPDATE_PROFILE:
       // For Example, any thing
       return {

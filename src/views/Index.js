@@ -303,7 +303,7 @@ const Index = (props) => {
                           <Progress
                             max="100"
                             value="75"
-                            barClassName="bg-gradient-info"
+                            barClassName="bg-primary-update"
                           />
                         </div>
                       </div>
