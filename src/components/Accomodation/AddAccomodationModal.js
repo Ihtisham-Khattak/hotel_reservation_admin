@@ -64,6 +64,20 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
 
   const addAccomodation = (e) => {
     e.preventDefault();
+    const emptyKeys = Object.keys(formData).filter(
+      (key) => formData[key] === ""
+    );
+
+    if (emptyKeys.length > 0) {
+      // Alert user about empty keys
+      alert(`Please fill in all required fields.`);
+      return; // Stop further execution
+    }
+    // Check if images array has length greater than 0
+    if (propertyImages.length === 0) {
+      alert("Please add at least one image.");
+      return; // Stop further execution
+    }
     let payload = {
       ...formData,
       images: propertyImages,
@@ -72,6 +86,7 @@ const AddAccomodationModal = ({ accomodationModal, toggle }) => {
       addAccomodationActions(payload, () => {
         alert("Accomodation Added");
         setFormData(initialFormData);
+        setpropertyImages([]);
         toggle();
       })
     );

@@ -38,6 +38,8 @@ export const getAllAccomodations = () => async (dispatch) => {
     firebase
       .firestore()
       .collection("accomodations")
+      .orderBy("createdAt", "desc")
+      .limit(10)
       .onSnapshot((query) => {
         let data = [];
         for (let doc of query.docs) {
@@ -45,8 +47,47 @@ export const getAllAccomodations = () => async (dispatch) => {
             data.push({ id: doc.id, ...doc.data() });
           }
         }
+        if (data.length < 10) {
+          dispatch({
+            type: "DISABLE_LOADMORE",
+            payload: true,
+          });
+        }
         dispatch({
           type: "ACCOMODATIONS",
+          payload: data,
+        });
+        dispatch(loader(false));
+      });
+  } catch (error) {
+    dispatch(loader(false));
+    console.error("Error Getting accomodation:", error);
+  }
+};
+
+export const fetchMoreAccomodations = (item) => async (dispatch) => {
+  try {
+    firebase
+      .firestore()
+      .collection("accomodations")
+      .orderBy("createdAt", "desc")
+      .startAfter(item.createdAt)
+      .limit(10)
+      .onSnapshot((query) => {
+        let data = [];
+        for (let doc of query.docs) {
+          if (doc.exists) {
+            data.push({ id: doc.id, ...doc.data() });
+          }
+        }
+        if (data.length < 10) {
+          dispatch({
+            type: "DISABLE_LOADMORE",
+            payload: true,
+          });
+        }
+        dispatch({
+          type: "MORE_ACCOMODATIONS",
           payload: data,
         });
         dispatch(loader(false));

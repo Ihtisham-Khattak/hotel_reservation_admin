@@ -14,6 +14,16 @@ const accomodationsReducer = (state = initState, { type, payload }) => {
         ...state,
         accomdationData: payload,
       };
+    case "MORE_ACCOMODATIONS":
+      return {
+        ...state,
+        accomdationData: [...state.accomdationData, ...payload],
+      };
+    case "DISABLE_LOADMORE":
+      return {
+        ...state,
+        loadMoreBtn: payload,
+      };
     default:
       return {
         ...state,
