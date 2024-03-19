@@ -6,6 +6,7 @@ export const getReservations = () => async (disptach) => {
     firebase
       .firestore()
       .collection("reservation")
+      .orderBy("createdAt", "desc")
       .onSnapshot((query) => {
         let reservations = [];
         for (let doc of query.docs) {

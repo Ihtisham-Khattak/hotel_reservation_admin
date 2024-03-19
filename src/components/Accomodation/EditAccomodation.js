@@ -73,7 +73,7 @@ const EditAccomodation = ({ modal, toggle, singleAccomodation }) => {
   const addAccomodation = (e) => {
     e.preventDefault();
     const emptyKeys = Object.keys(formData).filter(
-      (key) => formData[key] === ""
+      (key) => key !== "availableFrom" && formData[key] === ""
     );
 
     if (emptyKeys.length > 0) {

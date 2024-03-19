@@ -6,6 +6,7 @@ export const getMessages = () => async (disptach) => {
     firebase
       .firestore()
       .collection("contacts")
+      .orderBy("createdAt", "desc")
       .onSnapshot((query) => {
         let messages = [];
         for (let doc of query.docs) {

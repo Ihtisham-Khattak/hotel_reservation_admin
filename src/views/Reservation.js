@@ -100,7 +100,7 @@ const Reservation = () => {
                                 </Media>
                               </th>
 
-                              <td>{item.reservedByID}</td>
+                              <td>{item.userName}</td>
                               <td>{item.reservationDates.checkinDate}</td>
                               <td>{item.reservationDates.checkoutDate}</td>
                               <td className="text-capitalize">
