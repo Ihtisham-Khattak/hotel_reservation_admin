@@ -30,33 +30,11 @@ const AdminNavbar = (props) => {
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
                 Admin
-                {/* <Media className="align-items-center">
-                  <span className="avatar avatar-sm rounded-circle">
-                    <img
-                      alt="..."
-                      src={
-                        require("../../assets/img/theme/team-4-800x800.jpg")
-                          .default
-                      }
-                    />
-                  </span>
-                  <Media className="ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm font-weight-bold">
-                      Hotel Reservation
-                    </span>
-                  </Media>
-                </Media> */}
+               
               </DropdownToggle>
 
               <DropdownMenu className="dropdown-menu-arrow" right>
-                {/* <DropdownItem className="noti-title" header tag="div">
-                  <h6 className="text-overflow m-0">Welcome!</h6>
-                </DropdownItem> */}
-                {/* <DropdownItem to="/admin/user-profile" tag={Link}>
-                  <i className="ni ni-single-02" />
-                  <span>My profile</span>
-                </DropdownItem> */}
-                {/* <DropdownItem divider /> */}
+              
                 <DropdownItem
                   href="#pablo"
                   onClick={(e) => {
